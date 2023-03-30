@@ -18,7 +18,7 @@ validation_dir = PATH + '\\validation'
 BATCH_SIZE = 1                                              
 IMG_SIZE = (32, 32) 
 no_of_classes = 7
-
+ 
 train_dataset = tf.keras.utils.image_dataset_from_directory(train_dir,
                                                             shuffle=True,
                                                             batch_size=BATCH_SIZE, 
