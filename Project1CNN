@@ -1,0 +1,48 @@
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+import keras.optimizers
+import keras.models 
+import keras.layers.convolutional
+from  keras.optimizers import adam_v2 
+from keras.models import Sequential
+from keras.layers import BatchNormalization, Activation,MaxPooling2D, Dropout
+
+
+from keras.layers.convolutional import Conv2D
+
+PATH = 'C:\Projects\\archive\\images'
+train_dir = PATH + '\\train'
+validation_dir = PATH + '\\validation' 
+
+BATCH_SIZE = 1                                              
+IMG_SIZE = (32, 32) 
+no_of_classes = 7
+
+train_dataset = tf.keras.utils.image_dataset_from_directory(train_dir,
+                                                            shuffle=True,
+                                                            batch_size=BATCH_SIZE, 
+                                                            image_size=IMG_SIZE)
+
+validation_dataset = tf.keras.utils.image_dataset_from_directory(validation_dir,
+                                                                 shuffle=True,
+                                                                 batch_size=BATCH_SIZE, 
+                                                                 image_size=IMG_SIZE)
+                                                            
+class_names = train_dataset.class_names
+ 
+print('Number of training batches: %d' % tf.data.experimental.cardinality(train_dataset).numpy())
+print('Number of validation batches: %d' % tf.data.experimental.cardinality(validation_dataset).numpy())
+
+model = Sequential()
+
+#1st CNN layer
+model.add(Conv2D(64,(3,3),padding = 'same',input_shape = (48,48,1)))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size = (2,2)))
+model.add(Dropout(0.25))
+
+opt = adam_v2.Adam(lr = 0.0001)
+model.compile(optimizer=opt,loss='categorical_crossentropy', metrics=['accuracy'])
+model.summary()
