@@ -27,7 +27,10 @@ train_dataset = tf.keras.utils.image_dataset_from_directory(train_dir,
                                                             shuffle=True,
                                                             batch_size=BATCH_SIZE, 
                                                             image_size=IMG_SIZE)
+
+#print(train_dataset[0:5])
 training_Count = tf.data.experimental.cardinality(train_dataset).numpy()
+
 validation_dataset = tf.keras.utils.image_dataset_from_directory(validation_dir,
                                                                  shuffle=True,
                                                                  batch_size=BATCH_SIZE, 
